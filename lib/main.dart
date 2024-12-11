@@ -46,6 +46,29 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  void _showScanResult(String result) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Scan Result'),
+          content: Text(result),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  _scanResult = null;
+                });
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,21 +94,16 @@ class HomePageState extends State<HomePage> {
             onDetect: (capture) {
               final List<Barcode> barcodes = capture.barcodes;
               for (final barcode in barcodes) {
-                setState(() {
-                  _scanResult = barcode.rawValue;
-                });
+                final rawValue = barcode.rawValue;
+                if (rawValue != null && rawValue != _scanResult) {
+                  setState(() {
+                    _scanResult = rawValue;
+                  });
+                  _showScanResult(rawValue);
+                }
               }
             },
           ),
-          if (_scanResult != null)
-            Positioned(
-              bottom: 20,
-              left: 20,
-              child: Text(
-                'Scan Result: $_scanResult',
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            ),
         ],
       ),
     );
