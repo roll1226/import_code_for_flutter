@@ -3,13 +3,15 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Barcode Scanner',
       home: HomePage(),
     );
@@ -17,14 +19,16 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   String? _scanResult;
   bool _isFlashOn = false;
-  MobileScannerController _scannerController = MobileScannerController();
+  final MobileScannerController _scannerController = MobileScannerController();
 
   @override
   void initState() {
@@ -46,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Barcode Scanner'),
+        title: const Text('Barcode Scanner'),
         actions: [
           IconButton(
             icon: Icon(_isFlashOn ? Icons.flash_on : Icons.flash_off),
@@ -79,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               left: 20,
               child: Text(
                 'Scan Result: $_scanResult',
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
         ],
